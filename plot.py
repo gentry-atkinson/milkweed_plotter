@@ -33,20 +33,18 @@ if __name__ == "__main__":
     points = [Point(p[1], p[0]) for p in coords]
     geo_df = gpd.GeoDataFrame(locations, geometry=points)
 
-    print(geo_df)
-
     ax = geo_df.plot(c='red', figsize=(10, 10))
-    ax.axis((-99, -97.5, 29.5, 31))
+    ax.axis((-97.760, -97.750, 30.225, 30.235))
     crs = {'init': 'epsg:4326'}
     ctx.add_basemap(
         ax,
         source=ctx.providers.CartoDB.Voyager,
-        crs=crs,
-        zoom=10
+        crs=crs
     )
 
 
     plt.title("Map with Plotted Points")
     plt.xlabel("Longitude")
     plt.ylabel("Latitude")
-    plt.show()
+    #plt.show()
+    plt.savefig('st_edwards_milkweed_map.png')
