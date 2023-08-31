@@ -1,23 +1,23 @@
 #Author: Gentry Atkinson
 #Organization: St. Edwards University
 #Date: 25 August, 2023
-#Description: Read the Excel file and plot the point on a map.
+#Description: Read the coordinate Excel file and plot the points on a map.
+
+# Maps provided by CartoDB
+# (C) OpenStreetMap contributors (C) CARTO
 
 import pandas as pd
 import geopandas as gpd
 import contextily as ctx
+import xyzservices as xyz
 from matplotlib import pyplot as plt
 from shapely.geometry import Point
-#from pyproj import Proj, transform
 
 if __name__ == "__main__":
 
     xls = pd.ExcelFile(r"Milkweed coordinates.xlsx")
     sheet = xls.parse(0)
     coords = [(sheet['Latitude'][i], sheet['Longitude'][i]) for i in range(len(sheet))]
-    #coords_wm = [transform(Proj(init='epsg:3857'), Proj(init='epsg:4826'), i[0], i[1]) for i in coords]
-    #print(coords_wm)
-
 
     locations = {
         'name': [],
@@ -38,8 +38,9 @@ if __name__ == "__main__":
     crs = {'init': 'epsg:4326'}
     ctx.add_basemap(
         ax,
-        source=ctx.providers.CartoDB.Voyager,
-        crs=crs
+        #source=ctx.providers.CartoDB.Voyager,
+        source=ctx.providers.OpenTopoMap,
+        crs=crs,
     )
 
 
